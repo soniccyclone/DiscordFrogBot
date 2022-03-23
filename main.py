@@ -23,7 +23,10 @@ async def on_ready():
 @client.event
 async def on_message(message: discord.Message) -> None:
   if message.author != client.user and message.content in frog_albums:
-    await try_send_image(message.channel, frog_albums[message.content])
+    try:
+      await try_send_image(message.channel, frog_albums[message.content])
+    except Exception as e:
+      print(e)
 
 async def try_send_image(channel: discord.TextChannel, imgur_album_id: str) -> None:
   images = imgur_client.get_album_images(imgur_album_id)
